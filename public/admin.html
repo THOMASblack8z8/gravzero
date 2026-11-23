@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador — GravZero</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="app-body">
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <i class="fas fa-feather-alt"></i>
+        <span>GravZero</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="/minha-carga.html" class="nav-link">
+          <i class="fas fa-box-open"></i> Minha Carga
+        </a>
+        <a href="/admin.html" class="nav-link active" id="adminLink">
+          <i class="fas fa-shield-alt"></i> Administrador
+        </a>
+        <span class="nav-user" id="navUser"></span>
+        <button class="btn btn-outline btn-sm" id="btnLogout" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+      <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="app-main">
+    <div class="container">
+      <!-- Acesso negado (mostrado para não-admin) -->
+      <div class="access-denied" id="accessDenied" style="display:none;">
+        <div class="denied-card">
+          <i class="fas fa-lock"></i>
+          <h2>Acesso restrito</h2>
+          <p>Esta página é exclusiva para administradores. Você não tem permissão para acessá-la.</p>
+          <a href="/minha-carga.html" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Ir para Minha Carga
+          </a>
+        </div>
+      </div>
+
+      <!-- Conteúdo admin -->
+      <div id="adminContent" style="display:none;">
+        <div class="page-header">
+          <h1><i class="fas fa-shield-alt"></i> Administrador</h1>
+          <p>Gerencie as mochilas da rede escolar.</p>
+        </div>
+
+        <!-- Formulário de cadastro/edição -->
+        <div class="form-card">
+          <h3 id="formTitle"><i class="fas fa-plus-circle"></i> Cadastrar mochila</h3>
+          <form id="mochilaForm" novalidate>
+            <input type="hidden" id="editId" value="">
+            <div class="form-row form-row-3">
+              <div class="form-group">
+                <label for="numero_serie">
+                  <i class="fas fa-barcode"></i>
+                  Número de série
+                </label>
+                <input type="text" id="numero_serie" name="numero_serie" placeholder="Ex.: MA-0031" required>
+              </div>
+              <div class="form-group">
+                <label for="turma">
+                  <i class="fas fa-graduation-cap"></i>
+                  Turma
+                </label>
+                <input type="text" id="turma" name="turma" placeholder="Ex.: 2º ano B" required>
+              </div>
+              <div class="form-group">
+                <label for="limite_padrao">
+                  <i class="fas fa-weight-hanging"></i>
+                  Limite padrão (kg)
+                </label>
+                <input type="number" id="limite_padrao" name="limite_padrao" placeholder="Ex.: 7" min="0.1" step="0.1" required>
+              </div>
+            </div>
+
+            <div id="mensagem" class="form-message" style="display:none;"></div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="btnSalvar">
+                <i class="fas fa-save"></i>
+                Salvar
+              </button>
+              <button type="button" class="btn btn-outline" id="btnCancelar" style="display:none;" onclick="cancelarEdicao()">
+                <i class="fas fa-times"></i>
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de mochilas -->
+        <div class="table-card">
+          <div class="table-header">
+            <h3><i class="fas fa-list"></i> Mochilas cadastradas</h3>
+            <span class="badge" id="totalMochilas">0</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="tabelaMochilas">
+              <thead>
+                <tr>
+                  <th>Nº de Série</th>
+                  <th>Turma</th>
+                  <th>Limite Padrão</th>
+                  <th>Cadastro</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="mochilasTbody">
+                <tr class="empty-row">
+                  <td colspan="5">
+                    <div class="empty-state">
+                      <i class="fas fa-inbox"></i>
+                      <p>Nenhuma mochila cadastrada.</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de confirmação -->
+  <div class="modal-overlay" id="modalOverlay" style="display:none;">
+    <div class="modal-card">
+      <div class="modal-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <h3>Confirmar exclusão</h3>
+      <p id="modalMsg">Deseja excluir esta mochila?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="fecharModal()">Cancelar</button>
+        <button class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

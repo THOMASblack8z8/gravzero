@@ -1,0 +1,76 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nome": "Administrador",
+      "email": "admin@gravzero.com",
+      "senha_hash": "$2a$10$HCPwAtwwTdMOuH4xBArueeHvDwGCgXfspzPrUIVJoVRt4TjE1B3m2",
+      "turma": "Gestão",
+      "role": "admin",
+      "created_at": "2026-11-23T14:27:05.847Z"
+    },
+    {
+      "id": 2,
+      "nome": "Pedro Henrique",
+      "email": "pedro.henrique@teste.com",
+      "senha_hash": "$2a$10$57/YWSvXW4siM7CHR7.vJeXqUkxfTfJV5XLwSpldREbyTosH1rrri",
+      "turma": "2º ano B",
+      "role": "usuario",
+      "created_at": "2026-11-23T14:28:59.652Z"
+    },
+    {
+      "id": 3,
+      "nome": "Thomas",
+      "email": "thomas@gmail.com",
+      "senha_hash": "$2a$10$bN5NM9JjKJJn4xITJVuPe.hbDHIem.MYZTASD8BP7U8.Nmtq.iixq",
+      "turma": "3° ano B",
+      "role": "usuario",
+      "created_at": "2026-11-23T14:59:16.950Z"
+    }
+  ],
+  "mochilas": [
+    {
+      "id": 2,
+      "numero_serie": "MA-0031",
+      "turma": "2º ano B",
+      "limite_padrao": 6,
+      "created_at": "2026-11-23T14:28:59.903Z"
+    }
+  ],
+  "configuracoes": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "mochila_id": 2,
+      "limite_peso": 6,
+      "modo_empuxo": "Normal",
+      "created_at": "2026-11-23T14:28:59.910Z",
+      "updated_at": "2026-11-23T14:28:59.910Z"
+    },
+    {
+      "id": 2,
+      "user_id": 3,
+      "mochila_id": null,
+      "limite_peso": 5,
+      "modo_empuxo": "Leve",
+      "created_at": "2026-11-23T15:00:40.085Z",
+      "updated_at": "2026-11-23T15:00:45.695Z"
+    }
+  ],
+  "redefinicao_senha": [
+    {
+      "id": 1,
+      "user_id": 2,
+      "email": "pedro.henrique@teste.com",
+      "token": "3bcd109c6f043a866484bcbc150aadf4ad460f054d3acc707c5ce52c6cbbddd0",
+      "usado": 0,
+      "created_at": "2026-11-23T14:28:59.800Z"
+    }
+  ],
+  "_counters": {
+    "usuarios": 3,
+    "mochilas": 2,
+    "configuracoes": 2,
+    "redefinicao_senha": 1
+  }
+}

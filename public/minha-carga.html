@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Carga — GravZero</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+</head>
+<body class="app-body">
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="/" class="nav-logo">
+        <i class="fas fa-feather-alt"></i>
+        <span>GravZero</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="/minha-carga.html" class="nav-link active">
+          <i class="fas fa-box-open"></i> Minha Carga
+        </a>
+        <a href="/admin.html" class="nav-link" id="adminLink" style="display:none;">
+          <i class="fas fa-shield-alt"></i> Administrador
+        </a>
+        <span class="nav-user" id="navUser"></span>
+        <button class="btn btn-outline btn-sm" id="btnLogout" onclick="logout()">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+      <button class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="app-main">
+    <div class="container">
+      <!-- Configuração atual -->
+      <div class="config-atual" id="configAtual" style="display:none;">
+        <div class="config-card-hero">
+          <div class="config-header-bar">
+            <i class="fas fa-check-circle"></i>
+            <span>Configuração ativa</span>
+          </div>
+          <div class="config-values">
+            <div class="config-value-item">
+              <div class="config-value-icon"><i class="fas fa-weight-hanging"></i></div>
+              <div>
+                <span class="config-value-label">Limite de peso</span>
+                <span class="config-value-num" id="displayLimite">—</span>
+              </div>
+            </div>
+            <div class="config-value-item">
+              <div class="config-value-icon"><i class="fas fa-rocket"></i></div>
+              <div>
+                <span class="config-value-label">Modo de empuxo</span>
+                <span class="config-value-num" id="displayModo">—</span>
+              </div>
+            </div>
+            <div class="config-value-item">
+              <div class="config-value-icon"><i class="fas fa-barcode"></i></div>
+              <div>
+                <span class="config-value-label">Mochila</span>
+                <span class="config-value-num" id="displayMochila">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário -->
+      <div class="page-header">
+        <h1><i class="fas fa-box-open"></i> Minha Carga</h1>
+        <p>Defina o limite de peso e o modo de empuxo da sua mochila GravZero.</p>
+      </div>
+
+      <div class="form-card">
+        <form id="cargaForm" novalidate>
+          <div class="form-group">
+            <label for="mochila_id">
+              <i class="fas fa-barcode"></i>
+              Mochila vinculada
+            </label>
+            <select id="mochila_id" name="mochila_id">
+              <option value="">Selecione uma mochila...</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="limite_peso">
+                <i class="fas fa-weight-hanging"></i>
+                Limite de peso (kg)
+              </label>
+              <input type="number" id="limite_peso" name="limite_peso" placeholder="Ex.: 6" min="0.1" step="0.1" required>
+              <small class="form-hint">Valor positivo em quilogramas.</small>
+            </div>
+
+            <div class="form-group">
+              <label for="modo_empuxo">
+                <i class="fas fa-rocket"></i>
+                Modo de empuxo
+              </label>
+              <select id="modo_empuxo" name="modo_empuxo" required>
+                <option value="">Selecione...</option>
+                <option value="Leve">Leve — 25% de compensação</option>
+                <option value="Normal">Normal — 50% de compensação</option>
+                <option value="Intenso">Intenso — 75% de compensação</option>
+                <option value="Máximo">Máximo — 100% de compensação</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Visualização do empuxo -->
+          <div class="empuxo-visual" id="empuxoVisual" style="display:none;">
+            <div class="empuxo-bar-container">
+              <div class="empuxo-bar" id="empuxoBar"></div>
+            </div>
+            <div class="empuxo-info">
+              <span id="empuxoLabel">—</span>
+              <span id="empuxoPct">0%</span>
+            </div>
+          </div>
+
+          <div id="mensagem" class="form-message" style="display:none;"></div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="btnSalvar">
+            <i class="fas fa-save"></i>
+            Salvar configuração
+          </button>
+        </form>
+      </div>
+
+      <!-- Info sobre modos -->
+      <div class="info-cards-row">
+        <div class="info-card">
+          <div class="info-icon" style="color:#10b981;"><i class="fas fa-leaf"></i></div>
+          <h4>Leve</h4>
+          <p>25% de compensação. Ideal para cargas leves e trajetos curtos.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon" style="color:#3b82f6;"><i class="fas fa-balance-scale"></i></div>
+          <h4>Normal</h4>
+          <p>50% de compensação. Equilíbrio entre conforto e duração da bateria.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon" style="color:#f59e0b;"><i class="fas fa-bolt"></i></div>
+          <h4>Intenso</h4>
+          <p>75% de compensação. Para cargas pesadas e trajetos mais longos.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon" style="color:#ef4444;"><i class="fas fa-rocket"></i></div>
+          <h4>Máximo</h4>
+          <p>100% de compensação. Elimina completamente a sensação de peso.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/minha-carga.js"></script>
+</body>
+</html>
